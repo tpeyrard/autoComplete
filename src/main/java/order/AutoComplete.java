@@ -10,22 +10,26 @@ import static java.util.stream.Collectors.toList;
 
 public final class AutoComplete {
 
-
     private static final int MAX_RESULTS = 4;
-    private static final List<String> DICTIONARY = sortedLowerCaseDictionary("Pandora", "Pinterest", "Paypal", "Pg&e", "Project free tv Priceline",
-            "Press democrat", "Progressive", "Project runway", "Proactive", "Programming", "Progeria", "Progesterone",
-            "Progenex", "Procurable", "Processor", "Proud", "Print", "Prank", "Bowl", "Owl", "River", "Phone", "Kayak",
-            "Stamps", "Reprobe");
+    private final List<String> dictionary;
 
-    public static List<String> search(String pattern) {
-        return DICTIONARY.stream()
+    public AutoComplete(String... words) {
+        this(Stream.of(words));
+    }
+
+    public AutoComplete(Stream<String> lines) {
+        dictionary = sortedLowerCaseDictionary(lines);
+    }
+
+    public List<String> search(String pattern) {
+        return dictionary.stream()
                 .filter(word -> word.startsWith(pattern))
                 .limit(MAX_RESULTS)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 
-    private static List<String> sortedLowerCaseDictionary(String... words) {
-        return Stream.of(words)
+    private static List<String> sortedLowerCaseDictionary(Stream<String> words) {
+        return words
                 .map(word -> word.toLowerCase(Locale.ENGLISH))
                 .sorted()
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));

@@ -1,7 +1,5 @@
 package order;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,22 +9,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AutoCompleteTest {
 
+    private final AutoComplete autoComplete = new AutoComplete("Pandora", "Pinterest", "Paypal", "Pg&e", "Project free tv Priceline",
+            "Press democrat", "Progressive", "Project runway", "Proactive", "Programming", "Progeria", "Progesterone",
+            "Progenex", "Procurable", "Processor", "Proud", "Print", "Prank", "Bowl", "Owl", "River", "Phone", "Kayak",
+            "Stamps", "Reprobe");
+
     @Test
     public void
     it_returns_empty_list_when_no_match() {
-        assertThat(AutoComplete.search("z")).isEmpty();
+        assertThat(autoComplete.search("z")).isEmpty();
     }
 
     @Test
     public void
     it_returns_only_four_results_with_one_letter_pattern() {
-        assertThat(AutoComplete.search("p")).isEqualTo(Arrays.asList("pandora", "paypal", "pg&e", "phone"));
+        assertThat(autoComplete.search("p")).isEqualTo(Arrays.asList("pandora", "paypal", "pg&e", "phone"));
     }
 
     @Test
     public void
     it_returns_first_four_matching_words() {
-        assertThat(AutoComplete.search("prog"))
+        assertThat(autoComplete.search("prog"))
                 .isEqualTo(asList("progenex", "progeria", "progesterone", "programming"));
     }
 }
