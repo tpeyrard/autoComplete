@@ -18,7 +18,7 @@ public final class AutoComplete {
     }
 
     public AutoComplete(Stream<String> lines) {
-        dictionary = sortedLowerCaseDictionary(lines);
+        this.dictionary = sortedLowerCaseDictionary(lines);
     }
 
     public List<String> search(String pattern) {
