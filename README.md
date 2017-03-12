@@ -1,5 +1,6 @@
 # autoComplete
 Kata auto-complete to find up to 4 elements in a dictionary that starts with the given string.
+Quickly test the program using the provided jar.
 ## Build
 `mvn clean install`
 ## Run
