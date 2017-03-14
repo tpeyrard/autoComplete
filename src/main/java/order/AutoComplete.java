@@ -22,8 +22,9 @@ public final class AutoComplete {
     }
 
     public List<String> search(String pattern) {
+        final String toLowerCase = pattern.toLowerCase(Locale.ENGLISH);
         return dictionary.stream()
-                .filter(word -> word.startsWith(pattern))
+                .filter(word -> word.startsWith(toLowerCase))
                 .limit(MAX_RESULTS)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }

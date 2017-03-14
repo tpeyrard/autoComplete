@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AutoCompleteTest {
@@ -31,5 +32,12 @@ public class AutoCompleteTest {
     it_returns_first_four_matching_words() {
         assertThat(autoComplete.search("prog"))
                 .isEqualTo(asList("progenex", "progeria", "progesterone", "programming"));
+    }
+
+    @Test
+    public void
+    it_supports_uppercase_input() {
+        assertThat(autoComplete.search("PAN"))
+                .isEqualTo(singletonList("pandora"));
     }
 }
