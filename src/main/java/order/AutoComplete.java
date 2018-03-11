@@ -1,5 +1,6 @@
 package order;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -21,12 +22,24 @@ public final class AutoComplete {
         this.dictionary = sortedLowerCaseDictionary(lines);
     }
 
-    public List<String> search(String pattern) {
+    public List<String> streamSearch(String pattern) {
         final String toLowerCase = pattern.toLowerCase(Locale.ENGLISH);
         return dictionary.stream()
                 .filter(word -> word.startsWith(toLowerCase))
                 .limit(MAX_RESULTS)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+    }
+
+    public List<String> search(String pattern) {
+        final String toLowerCase = pattern.toLowerCase(Locale.ENGLISH);
+        final List<String> results = new ArrayList<>(MAX_RESULTS);
+
+        for (String word : dictionary) {
+            if (results.size() < MAX_RESULTS && word.startsWith(toLowerCase)) {
+                results.add(word);
+            }
+        }
+        return results;
     }
 
     private static List<String> sortedLowerCaseDictionary(Stream<String> words) {
